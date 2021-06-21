@@ -142,19 +142,19 @@ int main() {
 //        printf("%d\n", distance);
     }
     // find min
-    int location = 0;
+    int location_min = 0;
     for (int c = 1; c < x / nn; c++) {
-        if (distance_array[c] < distance_array[location])
-            location = c;
+        if (distance_array[c] < distance_array[location_min])
+            location_min = c;
     }
-    printf("%d\n", distance_array[location]);
+    printf("%d\n", distance_array[location_min]);
 
     for (int i = 0; i < x / nn; i++) {
         int distance = 0;
         for (int j = 0; j < n - 1; j++) {
             distance += distance_table[all_perm_2[i][j] - 1][all_perm_2[i][j + 1] - 1];
         }
-        if (distance == distance_array[location]) {
+        if (distance == distance_array[location_min]) {
             for (int k = 0; k < n; k++) {
                 if (k < n - 1) {
                     printf("%d->", all_perm_2[i][k]);
@@ -165,7 +165,31 @@ int main() {
             printf("\n");
         }
     }
-//    print_distance_table(distance_table, n);
+
+    // find max
+    int location_max = 0;
+    for (int c = 1; c < x / nn; c++) {
+        if (distance_array[c] > distance_array[location_max])
+            location_max = c;
+    }
+    printf("%d\n", distance_array[location_max]);
+
+    for (int i = 0; i < x / nn; i++) {
+        int distance = 0;
+        for (int j = 0; j < n - 1; j++) {
+            distance += distance_table[all_perm_2[i][j] - 1][all_perm_2[i][j + 1] - 1];
+        }
+        if (distance == distance_array[location_max]) {
+            for (int k = 0; k < n; k++) {
+                if (k < n - 1) {
+                    printf("%d->", all_perm_2[i][k]);
+                } else {
+                    printf("%d", all_perm_2[i][k]);
+                }
+            }
+            printf("\n");
+        }
+    }
 
 
 
