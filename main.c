@@ -17,11 +17,11 @@ int Permutations(int *data, stack_data *stack, int n, int *all_perm) {
     while (k >= 0) {
         if (k >= n) {
             for (j = 0; j < n; ++j) {
-                printf("%d ", stack[j].value + 1);
+//                printf("%d ", stack[j].value + 1);
                 all_perm[x] = stack[j].value + 1;
                 x++;
             }
-            printf("\n");
+//            printf("\n");
             if (--k >= 0) //回到上一層，要將資料還原
                 data[stack[k].index] = stack[k].value;
             continue;
@@ -78,38 +78,73 @@ int get_Permutations_num(int *data, stack_data *stack, int n) {
 }
 
 int main() {
-    int i, n;
+    int n;
     int *a;
     scanf(" %d", &n);
-    a = (int *) malloc((sizeof(int) + sizeof(stack_data)) * n);
-    int x = get_Permutations_num(a, (stack_data *) (a + n), n);
+    int nn = n - 1;
+    a = (int *) malloc((sizeof(int) + sizeof(stack_data)) * nn);
+    int x = get_Permutations_num(a, (stack_data *) (a + nn), nn);
     int all_perm[100000] = {0};
-    Permutations(a, (stack_data *) (a + n), n, all_perm);
+    Permutations(a, (stack_data *) (a + nn), nn, all_perm);
 
-//    printf("%d", x);
+//    printf("%d\n", x);
 //    for (int i = 0; i < x; i++) {
 //        printf("%d ", all_perm[i]);
 //    }
 //    printf("\n");
 
-    int all_perm_2[x / n][n + 1];
+    int all_perm_2[x / nn][n];
     int row = 0;
     for (int i = 0; i < x; i++) {
         all_perm_2[row][0] = 1;
-        int j = i % n;
+        int j = i % nn;
         all_perm_2[row][j + 1] = all_perm[i];
-        if (j == n - 1) {
+        if (j == nn - 1) {
             row++;
         }
     }
+//
+//    printf("------------------------\n");
+//    for (int i = 0; i < x / nn; i++) {
+//        for (int j = 0; j < n; j++) {
+//            printf("%d ", all_perm_2[i][j]);
+//        }
+//        printf("\n");
+//    }
+//
+    int distance_table[10][10] = {0};
+    int temp;
 
-    printf("------------------------\n");
-    for (int i = 0; i < x / n; i++) {
-        for (int j = 0; j < n + 1; j++) {
-            printf("%d ", all_perm_2[i][j]);
+    for (int i = 0; i <= n; i++) {
+        for (int j = 0; j <= n; j++) {
+            if (i == 0 || j == 0) {
+                scanf("%d", &temp);
+            } else {
+                scanf("%d", &distance_table[i - 1][j - 1]);
+            }
+        }
+    }
+//
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            printf("%d ", distance_table[i][j]);
         }
         printf("\n");
     }
+//
+    int distance_array[x / nn];
+    for (int i = 0; i < x / nn; i++) {
+        int distance = 0;
+        for (int j = 0; j < n - 1; j++) {
+//            printf("%d %d\n", all_perm_2[i][j], all_perm_2[i][j + 1]);
+            distance += distance_table[all_perm_2[i][j] - 1][all_perm_2[i][j + 1] - 1];
+        }
+        printf("%d\n", distance);
+    }
+//    print_distance_table(distance_table, n);
+
+
+
 
 
 
