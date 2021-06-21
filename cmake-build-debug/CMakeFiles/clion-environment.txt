@@ -1,0 +1,4 @@
+ToolSet: w64 6.0 (local)@C:\Program Files\codeblocks-20.03mingw-nosetup\MinGW
+Options: 
+
+Options:
